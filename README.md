@@ -20,7 +20,6 @@ Prerequisites
 - install homebridge & plugins
   - `npm install -g --unsafe-perm homebridge`
   - `npm install -g --unsafe-perm homebridge-cmd4`
-  - `npm install -g --unsafe-perm homebridge-cmdswitch2`
 
 Setup
 =====
@@ -31,11 +30,34 @@ Setup
 - setup Homebridge
 - ~~profit!~~
 
-Data collection
-===============
+Dependencies
+============
+
+Just install Nix, it handles all the dependencies for you.
+
+However, constantly running nix-shell has a lot of overhead, so you might want to install all the required dependencies globally, and bypass nix-shell when executing scripts from within other processes (cron, cgi, homebridge...):
+
+For example, installing with Nix:
+```
+> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -i sqlite websocat curl jq yq htmlq getoptions bc
+```
+
+Then create somewhere a symlink named `nix-shell` pointing to just the regular shell:
+```
+> mkdir ~/.local/nix-override
+> ln -s /bin/sh ~/.local/nix-override/nix-shell
+```
+
+after which you can override nix-shell with PATH:
+```
+PATH=~/.local/nix-override:$PATH ./current.sh
+```
+
+Cron
+====
 Use cron job to read values periodically, for example:
 ```
-4,9,14,19,24,29,34,39,44,49,54,59 * * * * myuser cd ~/ouman; ./ouman_collect2db.sh
+4,9,14,19,24,29,34,39,44,49,54,59 * * * * myuser export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_collect2db.sh
 ```
 
 This will periodically read specified datasets from Ouman.io and store them to the databases ignoring consecutive duplicate values.
@@ -90,32 +112,12 @@ You can use these scripts with Homebridge to show and modify values with Apple H
          [
             {
                "type": "TemperatureSensor",
-               "displayName": "OutsideTemperature",
-               "statusActive":             "TRUE",
-               "currentTemperature":        66.6,
-               "name":                     "OutsideTemperature",
-               "stateChangeResponseTime":   5,
-               "polling": true,
-               "state_cmd": "/home/pi/stiebel/temp.sh"
-            },
-            {
-               "type": "TemperatureSensor",
-               "displayName": "InsideTemperature",
-               "statusActive":             "TRUE",
-               "currentTemperature":        66.6,
-               "name":                     "InsideTemperature",
-               "stateChangeResponseTime":   5,
-               "polling": true,
-               "state_cmd": "/home/pi/stiebel/fektemp.sh"
-            },
-            {
-               "type": "TemperatureSensor",
                "displayName": "outsideTemp",
                "statusActive":             "TRUE",
                "currentTemperature":        66.6,
                "name":                     "outsideTemp",
                "polling": true,
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
             },
             {
                "type": "TemperatureSensor",
@@ -124,7 +126,7 @@ You can use these scripts with Homebridge to show and modify values with Apple H
                "currentTemperature":        66.6,
                "name":                     "supplyTemperature",
                "polling": true,
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
             },
             {
                "type": "TemperatureSensor",
@@ -133,7 +135,7 @@ You can use these scripts with Homebridge to show and modify values with Apple H
                "currentTemperature":        66.6,
                "name":                     "indoorTemperature",
                "polling": true,
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
             },
             {
                "type": "CarbonDioxideSensor",
@@ -144,16 +146,16 @@ You can use these scripts with Homebridge to show and modify values with Apple H
                "carbonDioxidePeakLevel": 900,
                "name":                     "co2",
                "polling": [{"characteristic":"carbonDioxideLevel"}],
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
             },
             {
                "type": "HumiditySensor",
                "displayName": "rh",
                "statusActive":             "TRUE",
-	           "currentRelativeHumidity": 66.6,
+	            "currentRelativeHumidity": 66.6,
                "name":                     "rh",
                "polling": true,
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/stiebel/ouman_read.sh"
             },
             {
                "type": "Fan",
@@ -162,7 +164,7 @@ You can use these scripts with Homebridge to show and modify values with Apple H
                "on": "TRUE",
                "rotationSpeed": 50,
                "polling": [{"characteristic":"rotationSpeed"}],
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
             },
             {
                "type": "Fan",
@@ -171,47 +173,26 @@ You can use these scripts with Homebridge to show and modify values with Apple H
                "on": "TRUE",
                "rotationSpeed": 50,
                "polling": [{"characteristic":"rotationSpeed"}],
-               "state_cmd": "/home/pi/stiebel/ouman_read.sh"
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+            },
+            {
+               "type": "Switch",
+               "displayName": "Summermode",
+               "name": "Summermode",
+               "state_cmd": ". /etc/profile; /home/myuser/stiebel/summermode.sh"
+            },
+            {
+               "type": "Switch",
+               "displayName": "Fireplace",
+               "name": "Fireplace",
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/fireplace.sh"
+            },
+            {
+               "type": "Switch",
+               "displayName": "SummernightCooling",
+               "name": "SummernightCooling",
+               "state_cmd": ". /etc/profile; /home/myuser/ouman/summercooling.sh"
             }
-         ]
-    },
-    {
-        "platform": "cmdSwitch2",
-        "name": "CMD Switch",
-        "synchronous": true,
-        "_bridge": {
-            "username": "AA:AA:AA:AA:AA:28",
-            "port": 51828
-        },
-        "switches": [
-        {
-            "name": "Cooling",
-            "timeout": 5000,
-            "on_cmd": "/home/pi/stiebel/cooling.sh Set 0 0 true",
-            "off_cmd": "/home/pi/stiebel/cooling.sh Set 0 0 false",
-            "state_cmd": "bash -c 'exit $((1 - $(/home/pi/stiebel/cooling.sh Get)))'"
-        },
-        {
-            "name": "Summermode",
-            "timeout": 5000,
-            "on_cmd": "/home/pi/stiebel/summermode.sh Set 0 0 true",
-            "off_cmd": "/home/pi/stiebel/summermode.sh Set 0 0 false",
-            "state_cmd": "bash -c 'exit $((1 - $(/home/pi/stiebel/summermode.sh Get)))'"
-        },
-        {
-            "name": "Fireplace",
-            "timeout": 5000,
-            "on_cmd": "/home/pi/stiebel/fireplace.sh Set 0 0 true",
-            "off_cmd": "/home/pi/stiebel/fireplace.sh Set 0 0 false",
-            "state_cmd": "bash -c 'exit $((1 - $(/home/pi/stiebel/fireplace.sh Get)))'"
-        },
-        {
-            "name": "SummernightCooling",
-            "timeout": 5000,
-            "on_cmd": "/home/pi/stiebel/summercooling.sh Set 0 0 true",
-            "off_cmd": "/home/pi/stiebel/summercooling.sh Set 0 0 false",
-            "state_cmd": "bash -c 'exit $((1 - $(/home/pi/stiebel/summercooling.sh Get)))'"
-        }
         ]
     }
     ]
@@ -238,7 +219,7 @@ External hosting
 If you prefer to serve your graphs from another server, you can configure cronjobs to sync the databases to it. The scripts use vacuum to create an immutable snapshot to sync.
 
 ```
-7,22,37,52 * * * * myuser cd ~/ouman; ./ouman_vacuum.sh && rsync -avzq -e "ssh -qo StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./ouman.db.bak me@myserver.net:/var/www/ouman/ouman.db
+7,22,37,52 * * * * myuser export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_vacuum.sh && rsync -avzq -e "ssh -qo StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./ouman.db.bak me@myserver.net:/var/www/ouman/ouman.db
 
 ```
 
@@ -246,9 +227,13 @@ Standing on the shoulders of
 ============================
 - [curl](https://curl.se)
 - [websocat](https://github.com/vi/websocat)
+- [getoptions](https://github.com/ko1nksm/getoptions)
 - [jq](https://stedolan.github.io/jq/)
+- [yq](https://github.com/kislyuk/yq)
+- [htmlq](https://github.com/mgdm/htmlq)
 - [SQLite](https://www.sqlite.org/index.html)
 - [sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs)
 - [jquery](https://jquery.com)
 - [flot](http://www.flotcharts.org)
 - [homebridge](https://homebridge.io)
+- [cmd4](https://github.com/ztalbot2000/homebridge-cmd4)

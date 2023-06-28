@@ -20,4 +20,4 @@ WSTOKEN=$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token
   grep -v '3:::{"jsonrpc":"2.0","method":"device_connected"' |
   grep '3:::{"jsonrpc":"2.0","id":3,"result"' |
   sed 's/3::://' |
-  jq '.result'
+  jq '.result.code'
