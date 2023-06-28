@@ -5,15 +5,15 @@ set -eu
 getset=$1
 value=${2:-}
 if [ "$value" == "true" ]; then
-  value="3";
+  value="2"; # COMFORT (summer)
 else
-  value="2";
+  value="1"; # ECO (winter)
 fi
 
 source ./ouman_env.sh
 
 if [ "$getset" == "Set" ]; then
-  ./ouman_post.sh fanSpeedMode_ $value
+  ./ouman_post.sh heatingMode $value
 else
-  ./ouman_get.sh fanSpeedMode_
+  ./ouman_get.sh heatingMode
 fi

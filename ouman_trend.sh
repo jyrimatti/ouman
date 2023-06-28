@@ -1,17 +1,17 @@
-#!/bin/bash
 #! /usr/bin/env nix-shell
-#! nix-shell -I channel:nixos-21.11-small -i bash -p websocat jq
-set -eu
+#! nix-shell --pure -i bash -I channel:nixos-22.11-small -p websocat cacert curl jq
+set -eux
+
+object=$1
+date=$2
 
 export DEVICEID=$(cat /tmp/ouman-headers | tail -n-1)
 export TOKEN=$(cat /tmp/ouman-headers | head -n-1)
 
-DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$2")
+DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")
 DATE2=${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}
 
-scripts="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-source $scripts/ouman_objects.sh "$1"
+source ./ouman_objects.sh "$object"
 
 WSTOKEN=$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')
 

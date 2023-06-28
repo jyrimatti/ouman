@@ -1,12 +1,17 @@
-#!/bin/bash
 #! /usr/bin/env nix-shell
-#! nix-shell -I channel:nixos-21.11-small -i bash -p websocat jq
+#! nix-shell --pure -i bash -I channel:nixos-22.11-small -p websocat cacert curl jq nix
 set -eu
 
-#DEVICEID=$DEVICEID
-#TOKEN=$TOKEN
+object=$1
 
-source ./ouman_objects.sh "$1"
+source ./ouman_env.sh
+
+./ouman_login.sh
+
+export DEVICEID=$(cat /tmp/ouman-headers | tail -n-1)
+export TOKEN=$(cat /tmp/ouman-headers | head -n-1)
+
+source ./ouman_objects.sh "$object"
 
 WSTOKEN=$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')
 
