@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i bash -I channel:nixos-22.11-small -p cacert curl jq
+#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i bash -I channel:nixos-23.05-small -p cacert curl jq
 set -eu
 
 if [ ! -f "/tmp/ouman-headers" ]; then

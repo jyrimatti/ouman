@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure -i bash -I channel:nixos-22.11-small -p websocat cacert curl jq
+#! nix-shell --pure -i bash -I channel:nixos-23.05-small -p websocat cacert curl jq
 set -eux
 
 object=$1
