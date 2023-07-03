@@ -70,7 +70,7 @@ Then create somewhere a symlink named `nix-shell` pointing to just the regular s
 
 after which you can override nix-shell with PATH:
 ```
-PATH=~/.local/nix-override:$PATH ./current.sh
+PATH=~/.local/nix-override:$PATH ./homebridge/fireplace.sh
 ```
 
 Cron
@@ -97,131 +97,16 @@ Writing a value to Ouman.io (in this case `fireplaceFunction`):
 
 You can see all available values/commands (that I know of) in `ouman_objects.sh`
 
-See the ready made scripts:
-- fireplace.sh
-- summercooling.sh
+See the ready made scripts in `./homebridge`
 
 Homebridge configuration
 ========================
 
-You can use these scripts with Homebridge to show and modify values with Apple HomeKit. Example configuration:
-```
-{
-    "bridge": {
-        "name": "Homebridge",
-        "username": "11:22:33:44:55:66",
-        "port": 51826,
-        "pin": "123-45-678"
-    },
-    "description": "",
-    "accessories": [],
-    "platforms": [
-    {
-         "platform": "Cmd4",
-         "name": "Cmd4",
-         "outputConstants": false,
-         "_bridge": {
-            "username": "AA:AA:AA:AA:AA:27",
-            "port": 51827
-         },
-         "interval": 600,
-         "timeout": 10000,
-         "accessories" :
-         [
-            {
-               "type":               "TemperatureSensor",
-               "name":               "outsideTemp",
-               "displayName":        "outsideTemp",
-               "statusActive":       "TRUE",
-               "currentTemperature": 66.6,
-               "polling":            true,
-               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":               "TemperatureSensor",
-               "name":               "supplyTemperature",
-               "displayName":        "supplyTemperature",
-               "statusActive":       "TRUE",
-               "currentTemperature": 66.6,
-               "polling":            true,
-               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":               "TemperatureSensor",
-               "name":               "indoorTemperature",
-               "displayName":        "indoorTemperature",
-               "statusActive":       "TRUE",
-               "currentTemperature": 66.6,
-               "polling":            true,
-               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":                   "CarbonDioxideSensor",
-               "name":                   "co2",
-               "displayName":            "co2",
-               "statusActive":           "TRUE",
-               "carbonDioxideDetected":  "CO2_LEVELS_NORMAL",
-               "carbonDioxideLevel":     66.6,
-               "carbonDioxidePeakLevel": 900,
-               "polling":                [{"characteristic":"carbonDioxideLevel"}],
-               "state_cmd":              ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":                    "HumiditySensor",
-               "name":                    "rh",
-               "displayName":             "rh",
-               "statusActive":            "TRUE",
-	            "currentRelativeHumidity": 66.6,
-               "polling":                 true,
-               "state_cmd":               ". /etc/profile; /home/pi/stiebel/ouman_read.sh"
-            },
-            {
-               "type":          "Fan",
-               "name":          "supplyFan",
-               "displayName":   "supplyFan",
-               "on":            "TRUE",
-               "rotationSpeed": 50,
-               "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":          "Fan",
-               "name":          "exhaustFan",
-               "displayName":   "exhaustFan",
-               "on":            "TRUE",
-               "rotationSpeed": 50,
-               "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; /home/pi/ouman/ouman_read.sh"
-            },
-            {
-               "type":        "Switch",
-               "name":        "Summermode",
-               "displayName": "Summermode",
-               "state_cmd":   ". /etc/profile; /home/pi/stiebel/summermode.sh"
-            },
-            {
-               "type":        "Switch",
-               "name":        "Fireplace",
-               "displayName": "Fireplace",
-               "state_cmd":   ". /etc/profile; /home/pi/ouman/fireplace.sh"
-            },
-            {
-               "type":        "Switch",
-               "name":        "SummernightCooling",
-               "displayName": "SummernightCooling",
-               "state_cmd":   ". /etc/profile; /home/pi/ouman/summercooling.sh"
-            },
-            {
-               "type":        "Switch",
-               "name":        "Boost",
-               "displayName": "Boost",
-               "state_cmd":   ". /etc/profile; /home/pi/ouman/boost.sh"
-            }
-        ]
-    }
-    ]
-}
-```
+![HomeKit](homekit.jpeg)
+
+You can use these scripts with Homebridge to show and modify values with Apple HomeKit.
+
+See [example configuration](homebridge/config.json).
 
 HTML page
 =========
