@@ -11,7 +11,6 @@ Functionality
 - read individual values
 - write individual commands
 - directly usable with [homebridge](https://homebridge.io)
-- HTML page to show graphs with custom querying
 
 Prerequisites
 =============
@@ -23,12 +22,33 @@ Prerequisites
 
 Setup
 =====
-- git clone this repo
-- store your Ouman.io credentials to `.ouman-user` and `.ouman-pass`
-- create database: `./ouman_createdb.sh`
-- setup cronjobs
-- setup Homebridge
-- ~~profit!~~
+Assuming user home directory
+```
+cd ~
+```
+
+Clone this repo
+```
+git clone https://github.com/jyrimatti/ouman.git
+```
+
+Store Ouman.io credentials
+```
+echo '<my ouman user>' > .ouman-user
+echo '<my ouman password>' > .ouman-pass
+chmod go-rwx .ouman*
+```
+
+Create database
+```
+./ouman_createdb.sh
+```
+
+[Setup cronjobs](#cron)
+
+[Setup Homebridge](#homebridge-configuration)
+
+~~profit!~~
 
 Dependencies
 ============
@@ -39,7 +59,7 @@ However, constantly running nix-shell has a lot of overhead, so you might want t
 
 For example, installing with Nix:
 ```
-> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -i sqlite websocat curl jq yq htmlq getoptions bc
+> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -i sqlite websocat curl jq
 ```
 
 Then create somewhere a symlink named `nix-shell` pointing to just the regular shell:
@@ -57,7 +77,7 @@ Cron
 ====
 Use cron job to read values periodically, for example:
 ```
-4,9,14,19,24,29,34,39,44,49,54,59 * * * * myuser export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_collect2db.sh
+4,9,14,19,24,29,34,39,44,49,54,59 * * * * pi export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_collect2db.sh
 ```
 
 This will periodically read specified datasets from Ouman.io and store them to the databases ignoring consecutive duplicate values.
@@ -84,8 +104,6 @@ See the ready made scripts:
 Homebridge configuration
 ========================
 
-![HomeKit](homekit.jpeg)
-
 You can use these scripts with Homebridge to show and modify values with Apple HomeKit. Example configuration:
 ```
 {
@@ -111,87 +129,93 @@ You can use these scripts with Homebridge to show and modify values with Apple H
          "accessories" :
          [
             {
-               "type": "TemperatureSensor",
-               "displayName": "outsideTemp",
-               "statusActive":             "TRUE",
-               "currentTemperature":        66.6,
-               "name":                     "outsideTemp",
-               "polling": true,
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "type":               "TemperatureSensor",
+               "name":               "outsideTemp",
+               "displayName":        "outsideTemp",
+               "statusActive":       "TRUE",
+               "currentTemperature": 66.6,
+               "polling":            true,
+               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "TemperatureSensor",
-               "displayName": "supplyTemperature",
-               "statusActive":             "TRUE",
-               "currentTemperature":        66.6,
-               "name":                     "supplyTemperature",
-               "polling": true,
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "type":               "TemperatureSensor",
+               "name":               "supplyTemperature",
+               "displayName":        "supplyTemperature",
+               "statusActive":       "TRUE",
+               "currentTemperature": 66.6,
+               "polling":            true,
+               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "TemperatureSensor",
-               "displayName": "indoorTemperature",
-               "statusActive":             "TRUE",
-               "currentTemperature":        66.6,
-               "name":                     "indoorTemperature",
-               "polling": true,
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "type":               "TemperatureSensor",
+               "name":               "indoorTemperature",
+               "displayName":        "indoorTemperature",
+               "statusActive":       "TRUE",
+               "currentTemperature": 66.6,
+               "polling":            true,
+               "state_cmd":          ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "CarbonDioxideSensor",
-               "displayName": "co2",
-               "statusActive":             "TRUE",
-               "carbonDioxideDetected": "CO2_LEVELS_NORMAL",
-               "carbonDioxideLevel":        66.6,
+               "type":                   "CarbonDioxideSensor",
+               "name":                   "co2",
+               "displayName":            "co2",
+               "statusActive":           "TRUE",
+               "carbonDioxideDetected":  "CO2_LEVELS_NORMAL",
+               "carbonDioxideLevel":     66.6,
                "carbonDioxidePeakLevel": 900,
-               "name":                     "co2",
-               "polling": [{"characteristic":"carbonDioxideLevel"}],
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "polling":                [{"characteristic":"carbonDioxideLevel"}],
+               "state_cmd":              ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "HumiditySensor",
-               "displayName": "rh",
-               "statusActive":             "TRUE",
+               "type":                    "HumiditySensor",
+               "name":                    "rh",
+               "displayName":             "rh",
+               "statusActive":            "TRUE",
 	            "currentRelativeHumidity": 66.6,
-               "name":                     "rh",
-               "polling": true,
-               "state_cmd": ". /etc/profile; /home/myuser/stiebel/ouman_read.sh"
+               "polling":                 true,
+               "state_cmd":               ". /etc/profile; /home/pi/stiebel/ouman_read.sh"
             },
             {
-               "type": "Fan",
-               "displayName": "supplyFan",
-               "name": "supplyFan",
-               "on": "TRUE",
+               "type":          "Fan",
+               "name":          "supplyFan",
+               "displayName":   "supplyFan",
+               "on":            "TRUE",
                "rotationSpeed": 50,
-               "polling": [{"characteristic":"rotationSpeed"}],
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "polling":       [{"characteristic":"rotationSpeed"}],
+               "state_cmd":     ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "Fan",
-               "displayName": "exhaustFan",
-               "name": "exhaustFan",
-               "on": "TRUE",
+               "type":          "Fan",
+               "name":          "exhaustFan",
+               "displayName":   "exhaustFan",
+               "on":            "TRUE",
                "rotationSpeed": 50,
-               "polling": [{"characteristic":"rotationSpeed"}],
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/ouman_read.sh"
+               "polling":       [{"characteristic":"rotationSpeed"}],
+               "state_cmd":     ". /etc/profile; /home/pi/ouman/ouman_read.sh"
             },
             {
-               "type": "Switch",
+               "type":        "Switch",
+               "name":        "Summermode",
                "displayName": "Summermode",
-               "name": "Summermode",
-               "state_cmd": ". /etc/profile; /home/myuser/stiebel/summermode.sh"
+               "state_cmd":   ". /etc/profile; /home/pi/stiebel/summermode.sh"
             },
             {
-               "type": "Switch",
+               "type":        "Switch",
+               "name":        "Fireplace",
                "displayName": "Fireplace",
-               "name": "Fireplace",
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/fireplace.sh"
+               "state_cmd":   ". /etc/profile; /home/pi/ouman/fireplace.sh"
             },
             {
-               "type": "Switch",
+               "type":        "Switch",
+               "name":        "SummernightCooling",
                "displayName": "SummernightCooling",
-               "name": "SummernightCooling",
-               "state_cmd": ". /etc/profile; /home/myuser/ouman/summercooling.sh"
+               "state_cmd":   ". /etc/profile; /home/pi/ouman/summercooling.sh"
+            },
+            {
+               "type":        "Switch",
+               "name":        "Boost",
+               "displayName": "Boost",
+               "state_cmd":   ". /etc/profile; /home/pi/ouman/boost.sh"
             }
         ]
     }
