@@ -4,7 +4,7 @@ set -eu
 
 getset=${1:-}
 value=${4:-}
-if [ "$value" == "true" ] ||  [ "$value" == "1" ]; then
+if [ "$value" == "true" ] || [ "$value" == "1" ]; then
   value="5";
 else
   value="0";

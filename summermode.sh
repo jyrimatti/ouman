@@ -4,7 +4,7 @@ set -eu
 
 getset=${1:-}
 value=${4:-}
-if [ "$value" == "true" ]; then
+if [ "$value" == "true" ] || [ "$value" == "1" ]; then
   value="2"; # COMFORT (summer)
 else
   value="1"; # ECO (winter)
