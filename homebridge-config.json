@@ -27,7 +27,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":               "TemperatureSensor",
@@ -36,7 +36,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":               "TemperatureSensor",
@@ -45,7 +45,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":                   "CarbonDioxideSensor",
@@ -56,7 +56,7 @@
                "carbonDioxideLevel":     66.6,
                "carbonDioxidePeakLevel": 900,
                "polling":                [{"characteristic":"carbonDioxideLevel"}],
-               "state_cmd":              ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":              ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":                    "HumiditySensor",
@@ -65,7 +65,7 @@
                "statusActive":            "TRUE",
 	            "currentRelativeHumidity": 66.6,
                "polling":                 true,
-               "state_cmd":               ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":               ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":          "Fan",
@@ -74,7 +74,7 @@
                "on":            "TRUE",
                "rotationSpeed": 50,
                "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":          "Fan",
@@ -83,31 +83,31 @@
                "on":            "TRUE",
                "rotationSpeed": 50,
                "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./homebridge/object.sh"
+               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
             },
             {
                "type":        "Switch",
                "name":        "Summermode",
                "displayName": "Summermode",
-               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./homebridge/summermode.sh"
+               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./cmd/summermode.sh"
             },
             {
                "type":        "Switch",
                "name":        "Fireplace",
                "displayName": "Fireplace",
-               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./homebridge/fireplace.sh"
+               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./cmd/fireplace.sh"
             },
             {
                "type":        "Switch",
                "name":        "SummernightCooling",
                "displayName": "SummernightCooling",
-               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./homebridge/summercooling.sh"
+               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./cmd/summercooling.sh"
             },
             {
                "type":        "Switch",
                "name":        "Boost",
                "displayName": "Boost",
-               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./homebridge/boost.sh"
+               "state_cmd":   ". /etc/profile; cd /home/pi/ouman/; ./cmd/boost.sh"
             }
         ]
     }
