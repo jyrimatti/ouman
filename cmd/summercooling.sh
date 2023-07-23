@@ -15,5 +15,5 @@ source ./ouman_env.sh
 if [ "$getset" == "Set" ]; then
   ./ouman_post.sh summerCoolingFunctionMode $value
 else
-  echo "$(($(./ouman_get.sh summerCoolingFunctionMode) / 5))"
+  echo $(($(./ouman_get.sh summerCoolingFunctionMode) / 5))
 fi

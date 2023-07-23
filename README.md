@@ -59,13 +59,13 @@ However, constantly running nix-shell has a lot of overhead, so you might want t
 
 For example, installing with Nix:
 ```
-> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -i sqlite websocat curl jq
+> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -iA nixpkgs.bash nixpkgs.sqlite nixpkgs.websocat nixpkgs.curl nixpkgs.jq
 ```
 
 Then create somewhere a symlink named `nix-shell` pointing to just the regular shell:
 ```
 > mkdir ~/.local/nix-override
-> ln -s /bin/sh ~/.local/nix-override/nix-shell
+> ln -s /home/pi/.nix-profile/bin/bash ~/.local/nix-override/nix-shell
 ```
 
 after which you can override nix-shell with PATH:

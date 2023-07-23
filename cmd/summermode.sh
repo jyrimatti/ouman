@@ -15,5 +15,5 @@ source ./ouman_env.sh
 if [ "$getset" == "Set" ]; then
   ./ouman_post.sh heatingMode $value
 else
-  echo "$(($(./ouman_get.sh heatingMode) - 1))"
+  echo $(($(./ouman_get.sh heatingMode) - 1))
 fi
