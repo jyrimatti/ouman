@@ -8,8 +8,8 @@ source ./ouman_env.sh
 
 ./ouman_login.sh
 
-export DEVICEID=$(cat /tmp/ouman-headers | tail -n-1)
-export TOKEN=$(cat /tmp/ouman-headers | head -n-1)
+export DEVICEID=$(cat /tmp/ouman-headers-$USER | tail -n-1)
+export TOKEN=$(cat /tmp/ouman-headers-$USER | head -n-1)
 
 source ./ouman_objects.sh "$object"
 

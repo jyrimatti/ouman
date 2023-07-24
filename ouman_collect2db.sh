@@ -6,8 +6,8 @@ source ./ouman_env.sh
 
 ./ouman_login.sh
 
-export DEVICEID=$(cat /tmp/ouman-headers | tail -n-1)
-export TOKEN=$(cat /tmp/ouman-headers | head -n-1)
+export DEVICEID=$(cat /tmp/ouman-headers-$USER | tail -n-1)
+export TOKEN=$(cat /tmp/ouman-headers-$USER | head -n-1)
 
 start=$(date '+%C%y-%m-%d %H:%M:%S' -d '-30minutes')
 end=$(date '+%C%y-%m-%d %H:%M:%S')

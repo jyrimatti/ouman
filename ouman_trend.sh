@@ -5,8 +5,8 @@ set -eux
 object=$1
 date=$2
 
-export DEVICEID=$(cat /tmp/ouman-headers | tail -n-1)
-export TOKEN=$(cat /tmp/ouman-headers | head -n-1)
+export DEVICEID=$(cat /tmp/ouman-headers-$USER | tail -n-1)
+export TOKEN=$(cat /tmp/ouman-headers-$USER | head -n-1)
 
 DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")
 DATE2=${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}
