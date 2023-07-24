@@ -4,8 +4,8 @@ set -eu
 
 date=$1
 
-export DEVICEID=$(cat /tmp/ouman-headers-$USER | tail -n-1)
-export TOKEN=$(cat /tmp/ouman-headers-$USER | head -n-1)
+export DEVICEID=$(cat "/tmp/ouman-$USER/headers" | tail -n-1)
+export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
 
 echo "Populating date $date"
 for data in outsideTemp supplyTemperature indoorTemperature co2 ah supplyFan exhaustFan

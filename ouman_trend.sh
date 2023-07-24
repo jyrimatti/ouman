@@ -1,12 +1,12 @@
 #! /usr/bin/env nix-shell
 #! nix-shell --pure -i bash -I channel:nixos-23.05-small -p websocat cacert curl jq
-set -eux
+set -eu
 
 object=$1
 date=$2
 
-export DEVICEID=$(cat /tmp/ouman-headers-$USER | tail -n-1)
-export TOKEN=$(cat /tmp/ouman-headers-$USER | head -n-1)
+export DEVICEID=$(cat "/tmp/ouman-$USER/headers" | tail -n-1)
+export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
 
 DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")
 DATE2=${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}
