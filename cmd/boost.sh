@@ -15,5 +15,10 @@ source ./ouman_env.sh
 if [ "$getset" == "Set" ]; then
   ./ouman_post.sh fanSpeedMode_ $value
 else
-  echo $(($(./ouman_get.sh fanSpeedMode_) - 2))
+  ret=$(./ouman_get.sh fanSpeedMode_)
+  if [ "$ret" -lt "3" ]; then
+    echo 0
+  else
+    echo 1
+  fi
 fi
