@@ -9,7 +9,7 @@ remotefile=$3
 foo() {
     echo 'PRAGMA locking_mode = EXCLUSIVE;'
     echo 'BEGIN EXCLUSIVE;'
-    rsync -avzq -e "ssh -qo StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./ouman.db "$remoteuser@$remotehost:$remotefile" 1>&2
+    rsync -avzq --bwlimit=1000 -e "ssh -qo StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./ouman.db "$remoteuser@$remotehost:$remotefile" 1>&2
     echo 'COMMIT;'
     echo '.quit'
 }
