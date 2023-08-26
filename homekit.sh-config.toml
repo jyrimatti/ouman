@@ -1,0 +1,125 @@
+[[services]]
+type = "AccessoryInformation"
+
+[services.characteristics]
+Identify = {} # leave property completely out 'cos otherwise Homekit won't accept
+Manufacturer = "Swegon"
+Model = "W4 Smart"
+Name = "Ilmanvaihtokone"
+SerialNumber = "AA:AA:AA:AA:AA:BB"
+FirmwareRevision = "100.1.1"
+
+
+[[services]]
+type = "Switch"
+cmd = "ouman/cmd/summermode.sh"
+
+[services.characteristics]
+On = false
+Name = "Kesätila (ilmanvaihto)"
+
+
+[[services]]
+type = "Switch"
+cmd = "ouman/cmd/fireplace.sh"
+
+[services.characteristics]
+On = false
+Name = "Takkamoodi"
+
+[[services]]
+type = "Switch"
+cmd = "ouman/cmd/summercooling.sh"
+
+[services.characteristics]
+On = false
+Name = "Kesäyöviilennys"
+
+[[services]]
+type = "Switch"
+cmd = "ouman/cmd/boost.sh"
+
+[services.characteristics]
+On = false
+Name = "Tehostus"
+
+
+[[services]]
+type = "TemperatureSensor"
+cmd = "ouman/cmd/object.sh outsideTemp"
+polling = 60
+
+[services.characteristics]
+Name = "Ulkolämpötila"
+[services.characteristics.CurrentTemperature]
+value = 0
+minValue = -50
+
+
+[[services]]
+type = "TemperatureSensor"
+cmd = "ouman/cmd/object.sh supplyTemperature"
+polling = 60
+
+[services.characteristics]
+Name = "Syöttölämpötila"
+[services.characteristics.CurrentTemperature]
+value = 0
+
+
+[[services]]
+type = "TemperatureSensor"
+cmd = "ouman/cmd/object.sh indoorTemperature"
+polling = 60
+
+[services.characteristics]
+Name = "Sisälämpötila"
+[services.characteristics.CurrentTemperature]
+value = 0
+
+
+[[services]]
+type = "CarbonDioxideSensor"
+
+[services.characteristics]
+Name = "Hiilidioksidipitoisuus"
+CarbonDioxideDetected = false
+CarbonDioxidePeakLevel = 900
+[services.characteristics.CarbonDioxideLevel]
+value = 0
+cmd = "ouman/cmd/object.sh co2"
+polling = 60
+
+
+[[services]]
+type = "HumiditySensor"
+cmd = "ouman/cmd/object.sh rh"
+polling = 60
+
+[services.characteristics]
+Name = "Suhteellinen kosteus"
+CurrentRelativeHumidity = 0
+
+
+[[services]]
+type = "FanV2"
+
+[services.characteristics]
+Active = true
+Name = "Syöttö"
+[services.characteristics.RotationSpeed]
+value = 0
+cmd = "ouman/cmd/object.sh supplyFan"
+polling = 60
+
+
+[[services]]
+type = "FanV2"
+
+[services.characteristics]
+Active = true
+Name = "Poisto"
+[services.characteristics.RotationSpeed]
+value = 0
+cmd = "ouman/cmd/object.sh exhaustFan"
+polling = 60

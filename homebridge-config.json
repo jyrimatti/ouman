@@ -27,7 +27,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh outsideTemp"
             },
             {
                "type":               "TemperatureSensor",
@@ -36,7 +36,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh supplyTemperature"
             },
             {
                "type":               "TemperatureSensor",
@@ -45,7 +45,7 @@
                "statusActive":       "TRUE",
                "currentTemperature": 66.6,
                "polling":            true,
-               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":          ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh indoorTemperature"
             },
             {
                "type":                   "CarbonDioxideSensor",
@@ -56,7 +56,7 @@
                "carbonDioxideLevel":     66.6,
                "carbonDioxidePeakLevel": 900,
                "polling":                [{"characteristic":"carbonDioxideLevel"}],
-               "state_cmd":              ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":              ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh co2"
             },
             {
                "type":                    "HumiditySensor",
@@ -65,7 +65,7 @@
                "statusActive":            "TRUE",
 	            "currentRelativeHumidity": 66.6,
                "polling":                 true,
-               "state_cmd":               ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":               ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh rh"
             },
             {
                "type":          "Fan",
@@ -74,7 +74,7 @@
                "on":            "TRUE",
                "rotationSpeed": 50,
                "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh supplyFan"
             },
             {
                "type":          "Fan",
@@ -83,7 +83,7 @@
                "on":            "TRUE",
                "rotationSpeed": 50,
                "polling":       [{"characteristic":"rotationSpeed"}],
-               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh"
+               "state_cmd":     ". /etc/profile; cd /home/pi/ouman/; ./cmd/object.sh exhaustFan"
             },
             {
                "type":        "Switch",

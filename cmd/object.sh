@@ -2,9 +2,10 @@
 #! nix-shell --pure -i bash -I channel:nixos-23.05-small -p bash nix
 set -eu
 
-getset=$1
-object=$2
-characteristic=${3:-}
+object=$1
+getset=$2
+service=$3
+characteristic=${4:-}
 
 source ./ouman_env.sh
 

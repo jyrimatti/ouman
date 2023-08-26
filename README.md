@@ -59,7 +59,7 @@ However, constantly running nix-shell has a lot of overhead, so you might want t
 
 For example, installing with Nix:
 ```
-> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -iA nixpkgs.bash nixpkgs.sqlite nixpkgs.websocat nixpkgs.curl nixpkgs.jq
+> nix-env -f https://github.com/NixOS/nixpkgs/archive/nixos-23.05-small.tar.gz -iA nixpkgs.bash nixpkgs.sqlite nixpkgs.websocat nixpkgs.curl nixpkgs.jq nixpkgs.gnused nixpkgs.gnugrep nixpkgs.coreutils nixpkgs.flock nixpkgs.findutils nixpkgs.rsync
 ```
 
 Then create somewhere a symlink named `nix-shell` pointing to just the regular shell:
@@ -77,7 +77,11 @@ Cron
 ====
 Use cron job to read values periodically, for example:
 ```
-4,9,14,19,24,29,34,39,44,49,54,59 * * * * pi export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_collect2db.sh
+MAILTO=pi
+USER=pi
+PATH=/home/pi/.local/nix-override:/home/pi/.nix-profile/bin
+
+4,9,14,19,24,29,34,39,44,49,54,59 * * * * cd ~/ouman; ./ouman_collect2db.sh 2>&1 1>/dev/null
 ```
 
 This will periodically read specified datasets from Ouman.io and store them to the databases ignoring consecutive duplicate values.
@@ -97,7 +101,7 @@ Writing a value to Ouman.io (in this case `fireplaceFunction`):
 
 You can see all available values/commands (that I know of) in `ouman_objects.sh`
 
-See the ready made scripts in `./homebridge`
+See the ready made scripts in `./cmd`
 
 Homebridge configuration
 ========================
@@ -106,43 +110,25 @@ Homebridge configuration
 
 You can use these scripts with Homebridge to show and modify values with Apple HomeKit.
 
-See [example configuration](homebridge/config.json).
-
-HTML page
-=========
-
-Build the javascripts by running
-```
-./installjs.sh
-./package.sh
-```
-
-If you don't have Nix on some machine, just do it the old fashioned way.
-
-Serve this directory with a web server. You can use `./serve.sh` to try locally. Use Nginx or other web server that supports byte-range-requests and caching for efficient SQLite database access over HTTP.
-
-![Screenshot](screenshot.png)
+See [example configuration](./homebridge-config.json).
 
 External hosting
 ================
 If you prefer to serve your graphs from another server, you can configure cronjobs to sync the databases to it. The scripts use vacuum to create an immutable snapshot to sync.
 
 ```
-7,22,37,52 * * * * myuser export PATH=~/.local/nix-override:$PATH; cd ~/ouman; ./ouman_vacuum.sh && rsync -avzq -e "ssh -qo StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" ./ouman.db.bak me@myserver.net:/var/www/ouman/ouman.db
+MAILTO=pi
+USER=pi
+PATH=/home/pi/.local/nix-override:/home/pi/.nix-profile/bin
 
+0,15,30,45 * * * * cd ~/ouman; ./ouman_rsync.sh <remoteuser> <remotehost> <remotepath> 2>&1 1>/dev/null
 ```
 
 Standing on the shoulders of
 ============================
 - [curl](https://curl.se)
 - [websocat](https://github.com/vi/websocat)
-- [getoptions](https://github.com/ko1nksm/getoptions)
 - [jq](https://stedolan.github.io/jq/)
-- [yq](https://github.com/kislyuk/yq)
-- [htmlq](https://github.com/mgdm/htmlq)
 - [SQLite](https://www.sqlite.org/index.html)
-- [sql.js-httpvfs](https://github.com/phiresky/sql.js-httpvfs)
-- [jquery](https://jquery.com)
-- [flot](http://www.flotcharts.org)
 - [homebridge](https://homebridge.io)
 - [cmd4](https://github.com/ztalbot2000/homebridge-cmd4)
