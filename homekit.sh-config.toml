@@ -12,7 +12,7 @@ FirmwareRevision = "100.1.1"
 
 [[services]]
 type = "Switch"
-cmd = "ouman/cmd/summermode.sh"
+cmd = "cd ouman; ./cmd/summermode.sh"
 
 [services.characteristics]
 On = false
@@ -21,7 +21,7 @@ Name = "Kesätila (ilmanvaihto)"
 
 [[services]]
 type = "Switch"
-cmd = "ouman/cmd/fireplace.sh"
+cmd = "cd ouman; ./cmd/fireplace.sh"
 
 [services.characteristics]
 On = false
@@ -29,7 +29,7 @@ Name = "Takkamoodi"
 
 [[services]]
 type = "Switch"
-cmd = "ouman/cmd/summercooling.sh"
+cmd = "cd ouman; ./cmd/summercooling.sh"
 
 [services.characteristics]
 On = false
@@ -37,7 +37,7 @@ Name = "Kesäyöviilennys"
 
 [[services]]
 type = "Switch"
-cmd = "ouman/cmd/boost.sh"
+cmd = "cd ouman; ./cmd/boost.sh"
 
 [services.characteristics]
 On = false
@@ -46,7 +46,7 @@ Name = "Tehostus"
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "ouman/cmd/object.sh outsideTemp"
+cmd = "cd ouman; ./cmd/object.sh outsideTemp"
 polling = 60
 
 [services.characteristics]
@@ -58,7 +58,7 @@ minValue = -50
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "ouman/cmd/object.sh supplyTemperature"
+cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
 polling = 60
 
 [services.characteristics]
@@ -69,7 +69,7 @@ value = 0
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "ouman/cmd/object.sh indoorTemperature"
+cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
 polling = 60
 
 [services.characteristics]
@@ -80,20 +80,19 @@ value = 0
 
 [[services]]
 type = "CarbonDioxideSensor"
+cmd = "cd ouman; ./cmd/object.sh co2"
+polling = 60
 
 [services.characteristics]
 Name = "Hiilidioksidipitoisuus"
-CarbonDioxideDetected = false
+CarbonDioxideDetected = 0
+CarbonDioxideLevel = 0
 CarbonDioxidePeakLevel = 900
-[services.characteristics.CarbonDioxideLevel]
-value = 0
-cmd = "ouman/cmd/object.sh co2"
-polling = 60
 
 
 [[services]]
 type = "HumiditySensor"
-cmd = "ouman/cmd/object.sh rh"
+cmd = "cd ouman; ./cmd/object.sh rh"
 polling = 60
 
 [services.characteristics]
@@ -105,11 +104,11 @@ CurrentRelativeHumidity = 0
 type = "FanV2"
 
 [services.characteristics]
-Active = true
+Active = 1
 Name = "Syöttö"
 [services.characteristics.RotationSpeed]
 value = 0
-cmd = "ouman/cmd/object.sh supplyFan"
+cmd = "cd ouman; ./cmd/object.sh supplyFan"
 polling = 60
 
 
@@ -117,9 +116,9 @@ polling = 60
 type = "FanV2"
 
 [services.characteristics]
-Active = true
+Active = 1
 Name = "Poisto"
 [services.characteristics.RotationSpeed]
 value = 0
-cmd = "ouman/cmd/object.sh exhaustFan"
+cmd = "cd ouman; ./cmd/object.sh exhaustFan"
 polling = 60
