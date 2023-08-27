@@ -1,18 +1,18 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure -i bash -I channel:nixos-23.05-small -p bash nix
+#! nix-shell --pure -i dash -I channel:nixos-23.05-small -p nix
 set -eu
 
 getset=${1:-}
 value=${4:-}
-if [ "$value" == "true" ] || [ "$value" == "1" ]; then
+if [ "$value" = "true" ] || [ "$value" = "1" ]; then
   value="3";
 else
   value="2";
 fi
 
-source ./ouman_env.sh
+. ./ouman_env.sh
 
-if [ "$getset" == "Set" ]; then
+if [ "$getset" = "Set" ]; then
   ./ouman_post.sh fanSpeedMode_ $value
 else
   ret=$(./ouman_get.sh fanSpeedMode_)

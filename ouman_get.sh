@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i bash -I channel:nixos-23.05-small -p cacert websocat curl jq nix gnugrep gnused
+#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.05-small -p cacert websocat curl jq nix gnugrep gnused
 set -eu
 
 object=$1
@@ -9,7 +9,7 @@ object=$1
 export DEVICEID=$(cat "/tmp/ouman-$USER/headers" | tail -n-1)
 export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
 
-source ./ouman_objects.sh "$object"
+. ./ouman_objects.sh "$object"
 
 # 22 == ? (0.05)
 # 28 == decription

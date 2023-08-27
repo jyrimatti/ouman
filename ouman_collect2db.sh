@@ -1,8 +1,8 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure -i bash -I channel:nixos-23.05-small -p sqlite nix
+#! nix-shell --pure -i dash -I channel:nixos-23.05-small -p sqlite nix
 set -eu
 
-source ./ouman_env.sh
+. ./ouman_env.sh
 
 ./ouman_login.sh
 
