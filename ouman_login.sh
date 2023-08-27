@@ -5,7 +5,7 @@ set -eu
 mkdir -p "/tmp/ouman-$USER"
 
 login() {
-  flock "/tmp/ouman-$USER/lock" curl --silent --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d '{"type":"client","tag":"ouman/swegon","username":"'"$OUMAN_USER"'","password":"'"$OUMAN_PASSWORD"'"}' https://api.ouman.io/login | jq '.token, (.devices | .[] .id)' | tr -d '"' > /tmp/ouman-$USER/headers
+  flock "/tmp/ouman-$USER/lock" curl --silent --show-error --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d '{"type":"client","tag":"ouman/swegon","username":"'"$OUMAN_USER"'","password":"'"$OUMAN_PASSWORD"'"}' https://api.ouman.io/login | jq '.token, (.devices | .[] .id)' | tr -d '"' > /tmp/ouman-$USER/headers
 }
 
 if [ ! -f "/tmp/ouman-$USER/headers" ]; then
