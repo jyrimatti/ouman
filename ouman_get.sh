@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.05-small -p cacert websocat curl jq nix gnugrep gnused
+#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.05-small -p dash cacert websocat curl jq nix gnugrep gnused
 set -eu
 
 object=$1
