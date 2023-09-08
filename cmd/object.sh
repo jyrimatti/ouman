@@ -4,7 +4,7 @@ set -eu
 
 object=$1
 getset=$2
-service=$3
+service=${3:-}
 characteristic=${4:-}
 
 . ./ouman_env.sh
@@ -12,7 +12,7 @@ characteristic=${4:-}
 if [ "$characteristic" = "On" ]; then
   echo 1
 elif [ "$getset" = "Get" ]; then
-  ./ouman_get.sh "$object"
+  ./ouman_get.sh "$object" | sed 's/^\([0-9]*[.][0-9]\).*/\1/'
 else
   exit 1
 fi

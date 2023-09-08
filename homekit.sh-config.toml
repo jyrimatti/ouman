@@ -12,113 +12,121 @@ FirmwareRevision = "100.1.1"
 
 [[services]]
 type = "Switch"
+
+[services.characteristics]
+Name = "Kesätila, ilmanvaihto"
+[services.characteristics.On]
 cmd = "cd ouman; ./cmd/summermode.sh"
-
-[services.characteristics]
-On = false
-Name = "Kesätila (ilmanvaihto)"
+value = false
 
 
 [[services]]
 type = "Switch"
-cmd = "cd ouman; ./cmd/fireplace.sh"
 
 [services.characteristics]
-On = false
 Name = "Takkamoodi"
+[services.characteristics.On]
+cmd = "cd ouman; ./cmd/fireplace.sh"
+value = false
+
 
 [[services]]
 type = "Switch"
-cmd = "cd ouman; ./cmd/summercooling.sh"
 
 [services.characteristics]
-On = false
 Name = "Kesäyöviilennys"
+[services.characteristics.On]
+cmd = "cd ouman; ./cmd/summercooling.sh"
+value = false
+
 
 [[services]]
 type = "Switch"
-cmd = "cd ouman; ./cmd/boost.sh"
 
 [services.characteristics]
-On = false
 Name = "Tehostus"
+[services.characteristics.On]
+cmd = "cd ouman; ./cmd/boost.sh"
+value = false
 
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "cd ouman; ./cmd/object.sh outsideTemp"
-polling = 60
+#polling = 60
 
 [services.characteristics]
 Name = "Ulkolämpötila"
 [services.characteristics.CurrentTemperature]
+cmd = "cd ouman; ./cmd/object.sh outsideTemp"
 value = 0
 minValue = -50
 
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
-polling = 60
+#polling = 60
 
 [services.characteristics]
 Name = "Syöttölämpötila"
 [services.characteristics.CurrentTemperature]
+cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
 value = 0
 
 
 [[services]]
 type = "TemperatureSensor"
-cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
-polling = 60
+#polling = 60
 
 [services.characteristics]
 Name = "Sisälämpötila"
 [services.characteristics.CurrentTemperature]
+cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
 value = 0
 
 
 [[services]]
 type = "CarbonDioxideSensor"
-cmd = "cd ouman; ./cmd/object.sh co2"
-polling = 60
+#polling = 60
 
 [services.characteristics]
 Name = "Hiilidioksidipitoisuus"
-CarbonDioxideDetected = 0
-CarbonDioxideLevel = 0
 CarbonDioxidePeakLevel = 900
+CarbonDioxideDetected = 0
+[services.characteristics.CarbonDioxideLevel]
+cmd = "cd ouman; ./cmd/object.sh co2"
+value = 0
 
 
 [[services]]
 type = "HumiditySensor"
-cmd = "cd ouman; ./cmd/object.sh rh"
-polling = 60
+#polling = 60
 
 [services.characteristics]
 Name = "Suhteellinen kosteus"
-CurrentRelativeHumidity = 0
+[services.characteristics.CurrentRelativeHumidity]
+cmd = "cd ouman; ./cmd/object.sh rh"
+value = 0
 
 
 [[services]]
 type = "FanV2"
+#polling = 60
 
 [services.characteristics]
 Active = 1
 Name = "Syöttö"
 [services.characteristics.RotationSpeed]
-value = 0
 cmd = "cd ouman; ./cmd/object.sh supplyFan"
-polling = 60
+value = 0
 
 
 [[services]]
 type = "FanV2"
+#polling = 60
 
 [services.characteristics]
 Active = 1
 Name = "Poisto"
 [services.characteristics.RotationSpeed]
-value = 0
 cmd = "cd ouman; ./cmd/object.sh exhaustFan"
-polling = 60
+value = 0

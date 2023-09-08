@@ -6,8 +6,8 @@ object=$1
 
 ./ouman_login.sh
 
-export DEVICEID=$(cat "/tmp/ouman-$USER/headers" | tail -n-1)
-export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
+export DEVICEID="$(cat "/tmp/ouman-$USER/headers" | tail -n-1)"
+export TOKEN="$(cat "/tmp/ouman-$USER/headers" | head -n-1)"
 
 . ./ouman_objects.sh "$object"
 
@@ -24,9 +24,15 @@ export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
 
 WSTOKEN=$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')
 
-(sleep 1; echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"read\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}'; sleep 3; echo '5:::{"name":"message", "args":[]}') |
+{
+  sleep 1;
+  echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"read\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}';
+  sleep 1;
+  echo '5:::{"name":"message", "args":[]}';
+} |
   websocat --max-messages=2 "wss://oulite.ouman.io/socket.io/1/websocket/$WSTOKEN?deviceid=$DEVICEID&token=$TOKEN" |
   grep -v '3:::{"jsonrpc":"2.0","method":"device_connected"' |
   grep '3:::{"jsonrpc":"2.0","id":3,"result"' |
   sed 's/3::://' |
   jq '.result.objects | .[] | .properties."85".value'
+
