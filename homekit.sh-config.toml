@@ -17,7 +17,6 @@ type = "Switch"
 Name = "Kesätila, ilmanvaihto"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/summermode.sh"
-value = false
 
 
 [[services]]
@@ -27,7 +26,6 @@ type = "Switch"
 Name = "Takkamoodi"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/fireplace.sh"
-value = false
 
 
 [[services]]
@@ -37,7 +35,6 @@ type = "Switch"
 Name = "Kesäyöviilennys"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/summercooling.sh"
-value = false
 
 
 [[services]]
@@ -47,7 +44,6 @@ type = "Switch"
 Name = "Tehostus"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/boost.sh"
-value = false
 
 
 [[services]]
@@ -58,7 +54,6 @@ type = "TemperatureSensor"
 Name = "Ulkolämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh outsideTemp"
-value = 0
 minValue = -50
 
 
@@ -70,7 +65,6 @@ type = "TemperatureSensor"
 Name = "Syöttölämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
-value = 0
 
 
 [[services]]
@@ -81,7 +75,6 @@ type = "TemperatureSensor"
 Name = "Sisälämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
-value = 0
 
 
 [[services]]
@@ -94,7 +87,6 @@ CarbonDioxidePeakLevel = 900
 CarbonDioxideDetected = 0
 [services.characteristics.CarbonDioxideLevel]
 cmd = "cd ouman; ./cmd/object.sh co2"
-value = 0
 
 
 [[services]]
@@ -105,7 +97,6 @@ type = "HumiditySensor"
 Name = "Suhteellinen kosteus"
 [services.characteristics.CurrentRelativeHumidity]
 cmd = "cd ouman; ./cmd/object.sh rh"
-value = 0
 
 
 [[services]]
@@ -117,7 +108,6 @@ Active = 1
 Name = "Syöttö"
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh supplyFan"
-value = 0
 
 
 [[services]]
@@ -129,4 +119,3 @@ Active = 1
 Name = "Poisto"
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh exhaustFan"
-value = 0
