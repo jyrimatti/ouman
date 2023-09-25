@@ -24,23 +24,37 @@ export TOKEN="$(cat "/tmp/ouman-$USER/headers" | head -n-1)"
 
 WSTOKEN="$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')"
 
-for retry in 1 2 3; do
-  ret="$(
-  {
-    sleep $retry;
-    echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"read\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}';
-    sleep $retry;
-    echo '5:::{"name":"message", "args":[]}';
-  } |
-    websocat --max-messages=2 "wss://oulite.ouman.io/socket.io/1/websocket/$WSTOKEN?deviceid=$DEVICEID&token=$TOKEN"
-  )"
-  if [ "$ret" != "" ]; then
-    break
-  fi
-  echo "ouman retrying: $retry" >&2
-done;
+tmpfile="$(mktemp -u)"
+mkfifo "$tmpfile"
+trap "rm $tmpfile" EXIT
+ret="$(
+{
+  while read -r line; do
+    case $line in
+      *'Connected to ws')
+        #echo "Sending first" >&2
+        echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"read\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}';
+        ;;
+      *'Forward finished')
+        #echo "Sending second" >&2
+        echo '5:::{"name":"message", "args":[]}';
+        ;;
+      '[INFO'*)
+        #echo "$line" >&2
+        ;;
+      '3:::{"jsonrpc":"2.0","id"'*)
+        #echo "Breaking...2" >&2
+        break;
+        ;;
+      *)
+        #echo "$line" >&2
+        ;;
+    esac
+  done < "$tmpfile"
+} |
+  websocat -v "wss://oulite.ouman.io/socket.io/1/websocket/$WSTOKEN?deviceid=$DEVICEID&token=$TOKEN" 2>&1 | tee "$tmpfile" | grep -v '^\['
+)" 2>/dev/null
 
-#echo "ouman response: $ret" >&2
 echo "$ret" | {
   grep -v '3:::{"jsonrpc":"2.0","method":"device_connected"' |
   grep '3:::{"jsonrpc":"2.0","id":3,"result"' |
