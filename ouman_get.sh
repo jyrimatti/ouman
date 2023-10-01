@@ -30,30 +30,21 @@ trap "rm $tmpfile" EXIT
 ret="$(
 {
   while read -r line; do
+    #echo "$line" >&2
     case $line in
-      *'Connected to ws')
+      '3:::{"jsonrpc":"2.0","method":"device_connected"'*)
         #echo "Sending first" >&2
         echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"read\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}';
         ;;
-      *'Forward finished')
-        #echo "Sending second" >&2
-        echo '5:::{"name":"message", "args":[]}';
-        ;;
-      '[INFO'*)
-        #echo "$line" >&2
-        ;;
       '3:::{"jsonrpc":"2.0","id"'*)
-        #echo "Breaking...2" >&2
+        #echo "Got response, breaking..." >&2
         break;
-        ;;
-      *)
-        #echo "$line" >&2
         ;;
     esac
   done < "$tmpfile"
 } |
   websocat -v "wss://oulite.ouman.io/socket.io/1/websocket/$WSTOKEN?deviceid=$DEVICEID&token=$TOKEN" 2>&1 | tee "$tmpfile" | grep -v '^\['
-)" 2>/dev/null
+)" 2>/dev/null # 'Abort trap: 6' >/dev/null
 
 echo "$ret" | {
   grep -v '3:::{"jsonrpc":"2.0","method":"device_connected"' |
