@@ -51,4 +51,4 @@ echo "$ret" | {
   grep '3:::{"jsonrpc":"2.0","id":3,"result"' |
   sed 's/3::://' |
   jq '.result.objects | .[] | .properties."85".value'
-}
+} | head -n1 # keep only first since sometimes we get multiple response values...
