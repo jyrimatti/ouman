@@ -112,7 +112,6 @@ Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh supplyFan"
 polling = 60
-perms = ["pr", "ev"]
 
 
 [[services]]
@@ -124,4 +123,3 @@ Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh exhaustFan"
 polling = 60
-perms = ["pr", "ev"]
