@@ -15,6 +15,7 @@ type = "Switch"
 
 [services.characteristics]
 Name = "Kesätila, ilmanvaihto"
+ConfiguredName = "Kesätila, ilmanvaihto"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/summermode.sh"
 
@@ -24,6 +25,7 @@ type = "Switch"
 
 [services.characteristics]
 Name = "Takkamoodi"
+ConfiguredName = "Takkamoodi"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/fireplace.sh"
 
@@ -33,6 +35,7 @@ type = "Switch"
 
 [services.characteristics]
 Name = "Kesäyöviilennys"
+ConfiguredName = "Kesäyöviilennys"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/summercooling.sh"
 
@@ -42,6 +45,7 @@ type = "Switch"
 
 [services.characteristics]
 Name = "Tehostus"
+ConfiguredName = "Tehostus"
 [services.characteristics.On]
 cmd = "cd ouman; ./cmd/boost.sh"
 
@@ -51,6 +55,7 @@ type = "TemperatureSensor"
 
 [services.characteristics]
 Name = "Ulkolämpötila"
+ConfiguredName = "Ulkolämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh outsideTemp"
 polling = 60
@@ -62,6 +67,7 @@ type = "TemperatureSensor"
 
 [services.characteristics]
 Name = "Syöttölämpötila"
+ConfiguredName = "Syöttölämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
 polling = 60
@@ -73,6 +79,7 @@ type = "TemperatureSensor"
 
 [services.characteristics]
 Name = "Sisälämpötila"
+ConfiguredName = "Sisälämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
 polling = 60
@@ -84,6 +91,7 @@ type = "CarbonDioxideSensor"
 
 [services.characteristics]
 Name = "Hiilidioksidipitoisuus"
+ConfiguredName = "Hiilidioksidipitoisuus"
 CarbonDioxidePeakLevel = 900
 [services.characteristics.CarbonDioxideDetected]
 cmd = "cd ouman; ./cmd/co_detected.sh"
@@ -98,6 +106,7 @@ type = "HumiditySensor"
 
 [services.characteristics]
 Name = "Suhteellinen kosteus"
+ConfiguredName = "Suhteellinen kosteus"
 [services.characteristics.CurrentRelativeHumidity]
 cmd = "cd ouman; ./cmd/object.sh rh"
 polling = 60
@@ -108,6 +117,7 @@ type = "FanV2"
 
 [services.characteristics]
 Name = "Syöttö"
+ConfiguredName = "Syöttö"
 Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh supplyFan"
@@ -119,6 +129,7 @@ type = "FanV2"
 
 [services.characteristics]
 Name = "Poisto"
+ConfiguredName = "Poisto"
 Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh exhaustFan"
