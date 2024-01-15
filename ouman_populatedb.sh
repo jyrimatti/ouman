@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure -i dash -I channel:nixos-23.05-small -p sqlite nix
+#! nix-shell --pure -i dash -I channel:nixos-23.11-small -p sqlite nix
 set -eu
 
 date=$1

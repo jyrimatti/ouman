@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.05-small -p dash cacert curl jq flock findutils
+#! nix-shell --pure --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.11-small -p dash cacert curl jq flock findutils
 set -eu
 
 test -e "/tmp/ouman-$USER" || mkdir -p "/tmp/ouman-$USER"
