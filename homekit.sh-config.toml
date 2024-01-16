@@ -58,7 +58,6 @@ Name = "Ulkolämpötila"
 ConfiguredName = "Ulkolämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh outsideTemp"
-polling = 60
 minValue = -50
 
 
@@ -70,7 +69,6 @@ Name = "Syöttölämpötila"
 ConfiguredName = "Syöttölämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
-polling = 60
 minValue = -50
 
 
@@ -82,7 +80,6 @@ Name = "Sisälämpötila"
 ConfiguredName = "Sisälämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
-polling = 60
 minValue = -30
 
 
@@ -98,7 +95,6 @@ cmd = "cd ouman; ./cmd/co_detected.sh"
 polling = 60
 [services.characteristics.CarbonDioxideLevel]
 cmd = "cd ouman; ./cmd/object.sh co2"
-polling = 60
 
 
 [[services]]
@@ -109,7 +105,6 @@ Name = "Suhteellinen kosteus"
 ConfiguredName = "Suhteellinen kosteus"
 [services.characteristics.CurrentRelativeHumidity]
 cmd = "cd ouman; ./cmd/object.sh rh"
-polling = 60
 
 
 [[services]]
@@ -121,7 +116,6 @@ ConfiguredName = "Syöttö"
 Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh supplyFan"
-polling = 60
 
 
 [[services]]
@@ -133,4 +127,3 @@ ConfiguredName = "Poisto"
 Active = 1
 [services.characteristics.RotationSpeed]
 cmd = "cd ouman; ./cmd/object.sh exhaustFan"
-polling = 60
