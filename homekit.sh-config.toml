@@ -58,7 +58,7 @@ Name = "Ulkolämpötila"
 ConfiguredName = "Ulkolämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh outsideTemp"
-minValue = -50
+minValue = -99
 
 
 [[services]]
@@ -69,7 +69,7 @@ Name = "Syöttölämpötila"
 ConfiguredName = "Syöttölämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh supplyTemperature"
-minValue = -50
+minValue = -99
 
 
 [[services]]
@@ -80,7 +80,7 @@ Name = "Sisälämpötila"
 ConfiguredName = "Sisälämpötila"
 [services.characteristics.CurrentTemperature]
 cmd = "cd ouman; ./cmd/object.sh indoorTemperature"
-minValue = -30
+minValue = -99
 
 
 [[services]]

@@ -4,4 +4,4 @@ set -eu
 
 . ./ouman_env.sh
 
-test "$(./cmd/object.sh co2 $*)" -gt 650 && echo 1 || echo 0
+test "$(./cmd/object.sh co2 $*)" -gt 900 && echo 1 || echo 0
