@@ -92,7 +92,6 @@ ConfiguredName = "Hiilidioksidipitoisuus"
 CarbonDioxidePeakLevel = 900
 [services.characteristics.CarbonDioxideDetected]
 cmd = "cd ouman; ./cmd/co_detected.sh"
-polling = 60
 [services.characteristics.CarbonDioxideLevel]
 cmd = "cd ouman; ./cmd/object.sh co2"
 
