@@ -22,7 +22,7 @@ export TOKEN="$(cat "/tmp/ouman-$USER/headers" | head -n-1)"
 # 117 == ? (1)
 # 187 == ? (10)
 
-WSTOKEN="$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')"
+WSTOKEN="$(curl --no-progress-meter "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')"
 
 tmpfile="$(mktemp -u)"
 mkfifo "$tmpfile"
