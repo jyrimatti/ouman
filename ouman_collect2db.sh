@@ -2,6 +2,8 @@
 #! nix-shell --pure -i dash -I channel:nixos-23.11-small -p sqlite nix
 set -eu
 
+export LC_ALL=C # "fix" Nix Perl locale warnings
+
 . ./ouman_env.sh
 
 ./ouman_login.sh
