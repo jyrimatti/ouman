@@ -2,9 +2,9 @@
 #! nix-shell --pure -i dash -I channel:nixos-23.11-small -p nix dash
 set -eu
 
-getset=$1
-object=$2
-characteristic=${3:-}
+getset="$1"
+object="$2"
+characteristic="${3:-}"
 
 . ./ouman_env.sh
 
