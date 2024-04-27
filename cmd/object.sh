@@ -3,7 +3,7 @@
 set -eu
 
 object="$1"
-getset="$2"
+getset="${2:-}"
 service="${3:-}"
 characteristic="${4:-}"
 
@@ -11,8 +11,8 @@ characteristic="${4:-}"
 
 if [ "$characteristic" = "On" ]; then
   echo 1
-elif [ "$getset" = "Get" ]; then
-  ./ouman_get.sh "$object" | sed 's/^\([0-9]*[.][0-9]\).*/\1/'
-else
+elif [ "$getset" = "Set" ]; then
   exit 1
+else
+  ./ouman_get.sh "$object" | sed 's/^\([0-9]*[.][0-9]\).*/\1/'
 fi

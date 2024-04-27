@@ -13,12 +13,15 @@ export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
 
 . ./ouman_objects.sh "$object"
 
-WSTOKEN=$(curl -s "https://oulite.ouman.io/socket.io/1/?deviceid=$DEVICEID&token=$TOKEN" | sed 's/\([^:]*\):.*/\1/g')
-
-(echo -n; sleep 1; echo '5:::{"name":"message","args":["{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"subscribe\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]}') |
-  websocat -n "wss://oulite.ouman.io/socket.io/1/websocket/$WSTOKEN?deviceid=$DEVICEID&token=$TOKEN" |
-  grep --line-buffered -v '3:::{"jsonrpc":"2.0","method":"device_connected"' |
-  grep --line-buffered -v '3:::{"jsonrpc":"2.0","id":3,"result":"ok"}' |
-  grep --line-buffered '3:::{"jsonrpc":"2.0","method":"value","params"' |
-  sed --unbuffered 's/3::://' |
+{
+  echo "40{\"deviceid\":\"$DEVICEID\",\"date\":\"$(date -u '+%Y-%m-%dT%H:%M:%S.000Z')\",\"token\":\"$TOKEN\"}"
+  sleep 1
+  echo '42["message","{\"jsonrpc\":\"2.0\",\"id\":3,\"method\":\"subscribe\",\"params\":{\"objects\":[{\"id\":\"'"$OBJECTID"'\",\"device\":255,\"properties\":{\"85\":{}}}]}}"]'
+} |
+  websocat -n "wss://oulite.ouman.io/socket.io/?EIO=4&transport=websocket" |
+  grep --line-buffered -v '42.*device_connected' |
+  grep --line-buffered -v '42.*result' |
+  grep --line-buffered '42.*params' |
+  sed 's/^42."message","\(.*\)"]/\1/' |
+  tr -d '\\' |
   jq '.params.objects | .[] | .properties."85".value'
