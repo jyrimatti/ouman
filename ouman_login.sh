@@ -1,6 +1,6 @@
 #! /usr/bin/env nix-shell
 #! nix-shell --pure --keep XDG_RUNTIME_DIR --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.11-small -p dash cacert curl jq flock findutils
-set -eux
+set -eu
 
 minutes="60"
 
