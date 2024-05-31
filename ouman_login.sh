@@ -1,6 +1,6 @@
 #! /usr/bin/env nix-shell
 #! nix-shell --pure --keep XDG_RUNTIME_DIR --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.11-small -p dash cacert curl jq flock findutils
-set -eu
+set -eux
 
 minutes="60"
 
@@ -8,6 +8,7 @@ DIR="${XDG_RUNTIME_DIR:-/tmp}/ouman"
 
 if [ -s "$DIR/headers" ]; then
   for i in $(find $DIR/headers -mmin -$minutes); do
+    cat "$DIR/headers"
     exit 0
   done
 fi

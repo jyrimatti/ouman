@@ -10,8 +10,8 @@ headers="$(dash ./ouman_login.sh)"
 export DEVICEID=$(echo "$headers" | tail -n-1)
 export TOKEN=$(echo "$headers" | head -n-1)
 
-DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")
-DATE2=${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}
+DATE1="$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")"
+DATE2="${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}"
 
 . ./ouman_objects.sh "$object"
 
