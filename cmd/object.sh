@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep LD_LIBRARY_PATH -i dash -I channel:nixos-23.11-small -p dash nix
+#! nix-shell --pure --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-23.11-small -p dash websocat cacert curl jq flock findutils nix gnugrep gnused
 set -eu
 
 object="$1"
@@ -14,5 +14,5 @@ if [ "$characteristic" = "On" ]; then
 elif [ "$getset" = "Set" ]; then
   exit 1
 else
-  ./ouman_get.sh "$object" | sed 's/^\([0-9]*[.][0-9]\).*/\1/'
+  dash ./ouman_get.sh "$object" | sed 's/^\([0-9]*[.][0-9]\).*/\1/'
 fi

@@ -1,12 +1,14 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep LD_LIBRARY_PATH -i dash -I channel:nixos-23.11-small -p dash websocat cacert curl jq gnugrep gnused
+#! nix-shell --pure --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-23.11-small -p dash websocat cacert curl jq gnugrep gnused
 set -eu
 
 object=$1
 date=$2
 
-export DEVICEID=$(cat "/tmp/ouman-$USER/headers" | tail -n-1)
-export TOKEN=$(cat "/tmp/ouman-$USER/headers" | head -n-1)
+headers="$(dash ./ouman_login.sh)"
+
+export DEVICEID=$(echo "$headers" | tail -n-1)
+export TOKEN=$(echo "$headers" | head -n-1)
 
 DATE1=$(date '+%C%y-%m-%d %H:%M:%S' -d "$date")
 DATE2=${3:-$(date '+%C%y-%m-%d %H:%M:%S' -d "$DATE1 +1 day")}

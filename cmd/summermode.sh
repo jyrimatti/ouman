@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep LD_LIBRARY_PATH -i dash -I channel:nixos-23.11-small -p nix dash
+#! nix-shell --pure --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-23.11-small -p dash websocat cacert curl jq flock findutils nix gnugrep gnused
 set -eu
 
 getset="${1:-}"
@@ -13,8 +13,8 @@ fi
 . ./ouman_env.sh
 
 if [ "$getset" = "Set" ]; then
-  response="$(./ouman_post.sh heatingMode $value)"
+  response="$(dash ./ouman_post.sh heatingMode $value)"
   echo 1
 else
-  echo "$(($(./ouman_get.sh heatingMode) - 1))"
+  echo "$(($(dash ./ouman_get.sh heatingMode) - 1))"
 fi

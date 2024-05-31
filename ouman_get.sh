@@ -1,13 +1,13 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep LD_LIBRARY_PATH --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.11-small -p dash cacert websocat curl jq nix gnugrep gnused
+#! nix-shell --pure --keep XDG_RUNTIME_DIR --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-23.11-small -p dash websocat cacert curl jq flock findutils nix gnugrep gnused
 set -eu
 
 object=$1
 
-./ouman_login.sh
+headers="$(dash ./ouman_login.sh)"
 
-export DEVICEID="$(cat "/tmp/ouman-$USER/headers" | tail -n-1)"
-export TOKEN="$(cat "/tmp/ouman-$USER/headers" | head -n-1)"
+export DEVICEID="$(echo "$headers" | tail -n-1)"
+export TOKEN="$(echo "$headers" | head -n-1)"
 
 . ./ouman_objects.sh "$object"
 
