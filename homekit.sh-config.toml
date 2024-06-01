@@ -1,3 +1,7 @@
+bridge = "ouman"
+port = 12306
+username = "AA:AA:AA:AA:AA:06"
+
 [[services]]
 type = "AccessoryInformation"
 
@@ -6,7 +10,7 @@ Identify = {} # leave property completely out 'cos otherwise Homekit won't accep
 Manufacturer = "Swegon"
 Model = "W4 Smart"
 Name = "Ilmanvaihtokone"
-SerialNumber = "AA:AA:AA:AA:AA:BB"
+SerialNumber = "AA:AA:AA:AA:AA:06"
 FirmwareRevision = "100.1.1"
 
 
