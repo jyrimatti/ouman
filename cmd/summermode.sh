@@ -14,7 +14,11 @@ fi
 
 if [ "$getset" = "Set" ]; then
   response="$(dash ./ouman_post.sh heatingMode $value)"
-  echo 1
+  echo "$((value - 1))"
 else
-  echo "$(($(dash ./ouman_get.sh heatingMode) - 1))"
+  if [ "$(dash ./ouman_get.sh heatingMode)" -eq 2 ]; then
+    echo 1
+  else
+    echo 0
+  fi
 fi

@@ -14,7 +14,7 @@ fi
 
 if [ "$getset" = "Set" ]; then
   response="$(dash ./ouman_post.sh fanSpeedMode_ $value)"
-  echo 1
+  echo "$((value - 2))"
 else
   ret="$(dash ./ouman_get.sh fanSpeedMode_)"
   if [ "$ret" -lt "3" ]; then

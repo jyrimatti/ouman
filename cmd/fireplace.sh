@@ -14,7 +14,7 @@ fi
 
 if [ "$getset" = "Set" ]; then
   response="$(dash ./ouman_post.sh fireplaceFunctionOn $value)"
-  echo 1
+  echo "$value"
 else
   dash ./ouman_get.sh fireplaceFunctionActive
 fi

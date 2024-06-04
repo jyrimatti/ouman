@@ -5,16 +5,24 @@ set -eu
 getset="${1:-}"
 value="${4:-}"
 if [ "$value" = "true" ] || [ "$value" = "1" ]; then
-  value="5";
+  value="4"; # full
 else
-  value="0";
+  value="0"; # off
 fi
 
 . ./ouman_env.sh
 
 if [ "$getset" = "Set" ]; then
   response="$(dash ./ouman_post.sh summerCoolingFunctionMode $value)"
-  echo 1
+  if [ "$value" -gt 0 ]; then
+    echo 1
+  else
+    echo 0
+  fi
 else
-  echo "$(($(dash ./ouman_get.sh summerCoolingFunctionMode) / 5))"
+  if [ "$(dash ./ouman_get.sh summerCoolingFunctionMode)" -gt 0 ]; then
+    echo 1
+  else
+    echo 0
+  fi
 fi
