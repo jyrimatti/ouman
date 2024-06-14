@@ -1,5 +1,5 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-23.11-small -p sqlite nix dash websocat cacert curl jq gnugrep gnused coreutils
+#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-23.11-small -p sqlite nix dash websocat cacert curl jq gnugrep gnused coreutils
 set -eu
 
 date=$1
