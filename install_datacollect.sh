@@ -21,7 +21,6 @@ After=syslog.target network.target
 Type=oneshot
 ExecStart=/bin/sh -c '. /etc/profile.d/nix.sh; PATH=$HOME/.local/nix-override:\$PATH $scriptdir/${service}_collect2db.sh'
 
-PrivateTmp=true
 ProtectSystem=strict
 ProtectHome=read-only
 ProtectKernelTunables=true
