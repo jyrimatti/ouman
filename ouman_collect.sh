@@ -1,15 +1,9 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-24.11-small -p dash nix cacert curl jq flock findutils websocat gnugrep gnused
+#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep BKT_SCOPE --keep BKT_CACHE_DIR
+#! nix-shell -i dash -I channel:nixos-24.11-small -p dash nix cacert curl jq flock findutils websocat gnugrep gnused bkt
 set -eu
 
 export LC_ALL=C # "fix" Nix Perl locale warnings
-
-. ./ouman_env.sh
-
-headers="$(dash ./ouman_login.sh)"
-
-export DEVICEID="$(echo "$headers" | tail -n-1)"
-export TOKEN="$(echo "$headers" | head -n-1)"
 
 start="$(date '+%C%y-%m-%d %H:%M:%S' -d '-30minutes')"
 end="$(date '+%C%y-%m-%d %H:%M:%S')"

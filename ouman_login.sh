@@ -1,32 +1,13 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep XDG_RUNTIME_DIR --keep OUMAN_USER --keep OUMAN_PASSWORD -i dash -I channel:nixos-24.11-small -p dash cacert curl jq flock findutils
+#! nix-shell --pure --keep BKT_SCOPE --keep BKT_CACHE_DIR
+#! nix-shell -i dash -I channel:nixos-24.11-small -p dash cacert curl jq flock findutils bkt
 set -eu
 
-minutes="60"
+. ./ouman_env.sh
 
-DIR="${XDG_RUNTIME_DIR:-/tmp}/ouman"
+postdata='{"type":"client","tag":"ouman/swegon","username":"'"$OUMAN_USER"'","password":"'"$OUMAN_PASSWORD"'"}'
 
-if [ -s "$DIR/headers" ]; then
-  for i in $(find $DIR/headers -mmin -$minutes); do
-    cat "$DIR/headers"
-    exit 0
-  done
-fi
-
-login() {
-  flock "$DIR/lock" curl --no-progress-meter --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d '{"type":"client","tag":"ouman/swegon","username":"'"$OUMAN_USER"'","password":"'"$OUMAN_PASSWORD"'"}' https://api.ouman.io/login\
-    | jq '.token, (.devices | .[] .id)'\
-    | tr -d '"'\
-    > "$DIR/headers"
-}
-
-test -e "$DIR" || mkdir -p "$DIR"
-
-if [ ! -f "$DIR/headers" ]; then
-  login
-fi
-for i in $(find $DIR/headers -mmin +$minutes); do
-  login
-done
-
-cat "$DIR/headers"
+bkt --discard-failures --ttl 60m --stale 30m -- \
+    flock "${BKT_CACHE_DIR:-/tmp}/ouman-login.lock" -c \
+    "curl --no-progress-meter --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d '$postdata' https://api.ouman.io/login \
+      | jq -r '(.devices | .[] .id) + \" \" + .token'"

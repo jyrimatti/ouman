@@ -1,5 +1,6 @@
 #! /usr/bin/env nix-shell
-#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep XDG_RUNTIME_DIR -i dash -I channel:nixos-24.11-small -p dash websocat cacert curl jq flock findutils nix gnugrep gnused
+#! nix-shell --pure --keep CREDENTIALS_DIRECTORY --keep BKT_SCOPE --keep BKT_CACHE_DIR
+#! nix-shell -i dash -I channel:nixos-24.11-small -p dash websocat cacert curl jq flock findutils nix gnugrep gnused bkt
 set -eu
 
 getset="${1:-}"
@@ -9,8 +10,6 @@ if [ "$value" = "true" ] || [ "$value" = "1" ]; then
 else
   value="0"; # off
 fi
-
-. ./ouman_env.sh
 
 if [ "$getset" = "Set" ]; then
   response="$(dash ./ouman_post.sh summerCoolingFunctionMode $value)"
