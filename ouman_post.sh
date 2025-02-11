@@ -11,6 +11,8 @@ dash ./ouman_login.sh | {
 
   . ./ouman_objects.sh "$object"
 
+  touch "${BKT_CACHE_DIR:-/tmp}/ouman.lock"
+
   {
     echo "40{\"deviceid\":\"$DEVICEID\",\"date\":\"$(date -u '+%Y-%m-%dT%H:%M:%S.000Z')\",\"token\":\"$TOKEN\"}"
     sleep 1

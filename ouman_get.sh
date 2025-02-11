@@ -5,4 +5,8 @@ set -eu
 
 object=$1
 
-bkt --discard-failures --ttl 60s --stale 50s --modtime "${BKT_CACHE_DIR:-/tmp}/ouman-invalidate" -- dash ./ouman_get_fetch.sh "$object"
+lock="${BKT_CACHE_DIR:-/tmp}/ouman.lock"
+
+flock "$lock" \
+    bkt --discard-failures --ttl 60s --stale 50s --modtime "$lock" -- \
+        dash ./ouman_get_fetch.sh "$object"

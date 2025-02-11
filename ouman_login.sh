@@ -7,7 +7,9 @@ set -eu
 
 postdata='{"type":"client","tag":"ouman/swegon","username":"'"$OUMAN_USER"'","password":"'"$OUMAN_PASSWORD"'"}'
 
-bkt --discard-failures --ttl 60m --stale 30m -- \
-    flock "${BKT_CACHE_DIR:-/tmp}/ouman-login.lock" -c \
-    "curl --no-progress-meter --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d '$postdata' https://api.ouman.io/login \
-      | jq -r '(.devices | .[] .id) + \" \" + .token'"
+lock="${BKT_CACHE_DIR:-/tmp}/ouman-login.lock"
+
+flock "$lock" \
+  bkt --discard-failures --ttl 60m --stale 50m -- \
+        curl --no-progress-meter --connect-timeout 30 -X POST -H 'Content-Type: application/json' -d "$postdata" https://api.ouman.io/login \
+  | jq -r '(.devices | .[] .id) + " " + .token'
