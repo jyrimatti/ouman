@@ -20,7 +20,7 @@ After=syslog.target network.target
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c '. /etc/profile.d/nix.sh; LD_LIBRARY_PATH="$(find /nix/store -maxdepth 1 -name '*nss-mdns*' -type d)/lib" PATH=$HOME/.local/nix-override:\$PATH sh $scriptdir/${service}_collect2db.sh'
-CPUWeight=128
+CPUQuota=20%
 Environment='BKT_CACHE_DIR=${XDG_RUNTIME_DIR}/homekit.sh/bkt'
 
 ProtectSystem=strict

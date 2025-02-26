@@ -25,7 +25,7 @@ After=syslog.target network.target
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c '. /etc/profile.d/nix.sh; PATH=$HOME/.local/nix-override:\$PATH $scriptdir/${service}_rsync.sh $remoteuser $remotehost $remotefile'
-CPUWeight=64
+CPUQuota=20%
 
 PrivateTmp=true
 ProtectSystem=strict
